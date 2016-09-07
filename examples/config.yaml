@@ -1,0 +1,12 @@
+{% include elasticsearch.yaml %}
+{% include connections.yaml %}
+
+application:
+  name: eyaml
+
+live:
+  access:
+    ssh:
+      passwd: secretpassage
+
+  {% elasticsearch %}

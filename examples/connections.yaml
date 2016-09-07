@@ -1,0 +1,20 @@
+live:
+  host: live.example.com
+  documentRoot: /transfer/live
+  access:
+    ssh:
+      user: root
+      passwd: secret
+
+test:
+  host: test.example.com
+  documentRoot: /transfer/test
+  access:
+    ssh:
+      user: root
+      passwd: secret2
+
+
+
+
+
