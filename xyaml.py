@@ -12,7 +12,8 @@ __author__ = 'Marco Bartel'
 
 LOG = logging.getLogger(__name__)
 
-class eyaml(object):
+
+class XYaml(object):
     @classmethod
     def merge(cls, a, b, path=None, update=True):
         if path is None: path = []
@@ -21,11 +22,9 @@ class eyaml(object):
                 if isinstance(a[key], dict) and isinstance(b[key], dict):
                     cls.merge(a[key], b[key], path + [str(key)])
                 elif a[key] == b[key]:
-                    pass  # same leaf value
+                    pass
                 elif isinstance(a[key], list) and isinstance(b[key], list):
                     a[key] = b[key]
-                    # for idx, val in enumerate(b[key]):
-                    #     a[key][idx] = cls.merge(a[key][idx], b[key][idx], path + [str(key), str(idx)], update=update)
                 elif update:
                     a[key] = b[key]
                 else:
@@ -33,7 +32,6 @@ class eyaml(object):
             else:
                 a[key] = b[key]
         return a
-
 
     @classmethod
     def _load(cls, filePath=None):
@@ -49,15 +47,14 @@ class eyaml(object):
         sd = data.splitlines()
         for l in sd:
             if l.strip().startswith("{%"):
-                 cmd, parameters = cls.extractCommand(l)
-                 if cmd=="include":
+                cmd, parameters = cls.extractCommand(l)
+                if cmd == "include":
                     incFilePath = parameters[0]
                     if not os.path.isabs(incFilePath):
                         incFilePath = os.path.join(os.path.dirname(filePath), incFilePath)
                     includes.append(incFilePath)
-                 elif cmd=="mixin":
-                     print "Mix"
-
+                elif cmd == "mixin":
+                    pass
 
             else:
                 lineData.append(l)
@@ -70,7 +67,6 @@ class eyaml(object):
         loaded = yaml.load("\n".join(lineData))
         if loaded:
             cls.merge(dictData, loaded)
-
 
         return dictData, mixins
 
@@ -86,7 +82,7 @@ class eyaml(object):
         write = False
         for d in cmdline:
             if write:
-                if d=="%}":
+                if d == "%}":
                     write = False
                     continue
                 else:
@@ -94,6 +90,8 @@ class eyaml(object):
 
             if d == "{%":
                 write = True
+
         return cmdsplit[0].lower(), cmdsplit[1:]
 
-load = eyaml.load
+
+load = XYaml.load
