@@ -2,7 +2,7 @@
 {% include connections.yaml %}
 
 application:
-  name: eyaml
+  name: xyaml
 
 live:
   access:

@@ -1,6 +1,6 @@
 {% mixin elasticsearch %}
 elasticsearch:
-  host: "elasticsearch1.e-s.intern"
+  host: "elasticsearch1.example.com"
   port: 9200
   updatesEnabled: True
 {% mixin %}
